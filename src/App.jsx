@@ -1,13 +1,20 @@
-const MyName = () => {
-  return <h2>私の名前は西尾です</h2>
-}
+// const MyName = () => {
+//   return <h2>私の名前は西尾です</h2>
+// }
 
-function App() {
-  
+const App = () => {
+  const onClickButton = (content) => alert(content);
+  const contentStyle = {
+    color: "blue",
+    fontSize:"18px",
+    margin: 100
+  };
+
   return (
     <>
-      <h1>こんにちは！</h1>
-      <MyName />
+      <h1 style={contentStyle}>こんにちは！</h1>
+      <p style={{color: "red"}}>お元気ですか？</p>
+      <button onClick = {() => onClickButton("aaa")}>ボタン</button>
     </>
   )
 }
