@@ -30,8 +30,11 @@ export default [
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
 
-      //’○○’ is missing in props validationのエラーに対処
+      // ’○○’ is missing in props validationのwarningに対処
       'react/prop-types': 'off',
+
+      // React Hook useEffect has a missing dependency のwarningに対処
+      'react-hooks/exhaustive-deps': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
