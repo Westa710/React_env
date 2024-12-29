@@ -3,7 +3,6 @@ import { ColorfulMessage } from "./components/ColorfulMessage";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  console.log("--App--");
   const [num, setNum] = useState(0);
   const [isShowFace, setIsShowFace] = useState(false);
   const onClickCountUp = () => {
