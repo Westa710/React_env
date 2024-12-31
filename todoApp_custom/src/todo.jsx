@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+
+// fixme: すべてのタブを消去したときにエラーが発生する問題を解消
 export const Todo = () => {
   const [todoTabs, setTodoTabs] = useState({
     "買い物": ["食パン","洗剤","目薬","ハンドクリーム","乾電池","ティッシュ"],
@@ -9,11 +11,35 @@ export const Todo = () => {
   });
   
   const [selectedTab, setSelectedTab] = useState("買い物");
+  const [newTabName, setNewTabName] = useState("");
+  const [isAddingTab, setIsAddingTab] = useState(false);
 
-  const onClickTab = (tab) => {
+  const onClickSelectTab = (tab) => {
     console.log(tab);
     setSelectedTab(tab);
   };
+
+  const onClickSaveTab = () => {
+    if(newTabName === "") {
+      setIsAddingTab(false);
+      return;
+    }
+    const newTodoTabs = todoTabs;
+    newTodoTabs[newTabName] = [];
+    setTodoTabs(newTodoTabs);
+
+    setIsAddingTab(false);
+  }
+
+  const onClickDeleteTab = (tabName) => {
+    console.log("called");
+    const newTodoTabs = { ...todoTabs };
+    delete newTodoTabs[tabName];
+    setTodoTabs(newTodoTabs);
+    if(tabName === selectedTab) {
+      setSelectedTab(Object.keys(newTodoTabs)[0] || "");
+    }
+  }
 
   return (
     <>
@@ -24,10 +50,28 @@ export const Todo = () => {
             return (
               <li key={index} style={{margin: "0 20px"}}>
                 <p>{tab}</p>
-                <button onClick={() => onClickTab(tab)}>{tab}</button>
+                <button onClick={() => onClickSelectTab(tab)}>{tab}</button>
+                <button onClick={() => onClickDeleteTab(tab)}>削除</button>
               </li>
             );
           })}
+
+          {isAddingTab && (
+            <div>
+              <input
+                type="text"
+                value={newTabName}
+                onChange={(e) => setNewTabName(e.target.value)}
+                placeholder='タブ名を入力'
+              />
+              <button onClick={onClickSaveTab}>保存</button>
+            </div>
+          )}
+
+          {!isAddingTab &&
+            <button onClick={() => setIsAddingTab(true)}>タブを追加</button>
+          }
+          
         </ul>
       </div>
       <ul>
