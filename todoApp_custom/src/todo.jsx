@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 
-// fixme: すべてのタブを消去したときにエラーが発生する問題を解消
 export const Todo = () => {
   const [todoTabs, setTodoTabs] = useState({
     "買い物": ["食パン","洗剤","目薬","ハンドクリーム","乾電池","ティッシュ"],
@@ -13,6 +12,9 @@ export const Todo = () => {
   const [selectedTab, setSelectedTab] = useState("買い物");
   const [newTabName, setNewTabName] = useState("");
   const [isAddingTab, setIsAddingTab] = useState(false);
+
+  const isExistTabs = (Object.keys(todoTabs).length !== 0);
+  const isExistTodosInSelectedTab = (selectedTab !== "" && todoTabs[selectedTab].length !== 0);
 
   const onClickSelectTab = (tab) => {
     console.log(tab);
@@ -26,13 +28,13 @@ export const Todo = () => {
     }
     const newTodoTabs = todoTabs;
     newTodoTabs[newTabName] = [];
+    
     setTodoTabs(newTodoTabs);
-
+    setNewTabName("");
     setIsAddingTab(false);
   }
 
   const onClickDeleteTab = (tabName) => {
-    console.log("called");
     const newTodoTabs = { ...todoTabs };
     delete newTodoTabs[tabName];
     setTodoTabs(newTodoTabs);
@@ -46,15 +48,16 @@ export const Todo = () => {
       <p>TODOリスト</p>
       <div>
         <ul style={{ display: 'flex'}}>
-          {Object.keys(todoTabs).map((tab, index) => {
-            return (
-              <li key={index} style={{margin: "0 20px"}}>
-                <p>{tab}</p>
-                <button onClick={() => onClickSelectTab(tab)}>{tab}</button>
-                <button onClick={() => onClickDeleteTab(tab)}>削除</button>
-              </li>
-            );
-          })}
+          {isExistTabs && (
+            Object.keys(todoTabs).map((tab, index) => {
+              return (
+                <li key={index} style={{margin: "0 20px"}}>
+                  <p>{tab}</p>
+                  <button onClick={() => onClickSelectTab(tab)}>{tab}</button>
+                  <button onClick={() => onClickDeleteTab(tab)}>削除</button>
+                </li>
+              );
+          }))}
 
           {isAddingTab && (
             <div>
@@ -75,14 +78,18 @@ export const Todo = () => {
         </ul>
       </div>
       <ul>
-        {todoTabs[selectedTab].map((todo, index) => {
-          return (
-            <li key={index}>
-              <p>{todo}</p>
-            </li>
-          )
-        })}
+        {isExistTabs && isExistTodosInSelectedTab && (
+          todoTabs[selectedTab].map((todo, index) => {
+            return (
+              <li key={index}>
+                <p>{todo}</p>
+              </li>
+            )
+        }))}
       </ul>
+      {!isExistTabs && 
+        <p>タスクを登録するには，タブを追加してください</p>
+      }
 
 
 
