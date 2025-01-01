@@ -136,13 +136,16 @@ export const Todo = () => {
           
         </ul>
       </div>
-      <ul>
+      <ul style={{listStyleType: "none"}}>
         {isExistTabs && isExistTodosInSelectedTab && (
           Tabs[selectedTab].map((todo, index) => {
             return (
-              <li key={index}>
-                <p>{todo}</p>
-              </li>
+              <div style={{display: "flex"}} key={index}>
+                <input type="checkbox" />
+                <li>
+                  <p>{todo}</p>
+                </li>
+              </div>
             )
         }))}
         {isExistTabs && (
