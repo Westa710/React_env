@@ -14,7 +14,10 @@ export const Todo = () => {
   const [isAddingTab, setIsAddingTab] = useState(false);
 
   const isExistTabs = (Object.keys(todoTabs).length !== 0);
-  const isExistTodosInSelectedTab = (selectedTab !== "" && todoTabs[selectedTab].length !== 0);
+  const isExistTodosInSelectedTab = (
+    selectedTab !== "" &&
+    todoTabs[selectedTab].length !== 0
+  );
 
   const onClickSelectTab = (tab) => {
     console.log(tab);
@@ -26,6 +29,11 @@ export const Todo = () => {
       setIsAddingTab(false);
       return;
     }
+
+    if(newTabName in todoTabs) {
+      window.alert("同名のタブは追加できません");
+      return;
+    };
     const newTodoTabs = todoTabs;
     newTodoTabs[newTabName] = [];
     
