@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import './App.css'
 
 export const Todo = () => {
@@ -12,12 +12,15 @@ export const Todo = () => {
   const [selectedTab, setSelectedTab] = useState("買い物");
   const [newTabName, setNewTabName] = useState("");
   const [isAddingTab, setIsAddingTab] = useState(false);
-
+  const [isComposing, setIsComposing] = useState(false);
+  
   const isExistTabs = (Object.keys(todoTabs).length !== 0);
   const isExistTodosInSelectedTab = (
     selectedTab !== "" &&
     todoTabs[selectedTab].length !== 0
   );
+
+  const inputElem = useRef(null);
 
   const onClickSelectTab = (tab) => {
     console.log(tab);
@@ -49,6 +52,21 @@ export const Todo = () => {
     if(tabName === selectedTab) {
       setSelectedTab(Object.keys(newTodoTabs)[0] || "");
     }
+
+  }
+
+  const onClickAddingTab = () => {
+    setIsAddingTab(true);
+    setTimeout(() => {
+      inputElem.current.focus();
+    }, 0);
+  }
+
+  const inputKeyDown = (event) => {
+    if(event.key === "Enter" && !isComposing){
+      onClickSaveTab();
+    }
+    
   }
 
   return (
@@ -71,8 +89,12 @@ export const Todo = () => {
             <div>
               <input
                 type="text"
+                ref={inputElem}
                 value={newTabName}
                 onChange={(e) => setNewTabName(e.target.value)}
+                onKeyDown={inputKeyDown}
+                onCompositionStart={() => setIsComposing(true)}
+                onCompositionEnd={() => setIsComposing(false)}
                 placeholder='タブ名を入力'
               />
               <button onClick={onClickSaveTab}>保存</button>
@@ -80,7 +102,7 @@ export const Todo = () => {
           )}
 
           {!isAddingTab &&
-            <button onClick={() => setIsAddingTab(true)}>タブを追加</button>
+            <button onClick={onClickAddingTab}>タブを追加</button>
           }
           
         </ul>
