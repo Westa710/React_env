@@ -125,6 +125,12 @@ export const Todo = () => {
     setTabs(newTabs);
   }
 
+  const onClickDeleteTodo = () => {
+    const newTabs = { ...tabs }; 
+    newTabs[selectedTab] = [ ...newTabs[selectedTab].filter(todo => todo.completed === false) ];
+    setTabs(newTabs);
+  }
+
   return (
     <>
       <p>TODOリスト</p>
@@ -184,6 +190,7 @@ export const Todo = () => {
                     onKeyDown={todoInputKeyDown}
                     placeholder='TODOを入力' />
             <button onClick={onClickSaveTodo}>Todoを追加</button>
+            <button onClick={onClickDeleteTodo}>完了済みのTODOを削除</button>
           </div>
         )}
 
