@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import './App.css'
+import './index.css'
 
 export const Todo = () => {
   const [tabs, setTabs] = useState({
