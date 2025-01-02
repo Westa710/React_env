@@ -140,7 +140,7 @@ export const Todo = () => {
             Object.keys(tabs).map((tab, index) => {
               return (
                 <li key={index} style={{margin: "0 20px"}}>
-                  <p>{tab}</p>
+                  <p style={(tab == selectedTab) ? {"color": "red"}: {"color": "black"}}>{tab}</p>
                   <button onClick={() => onClickSelectTab(tab)}>{tab}</button>
                   <button onClick={() => onClickDeleteTab(tab)}>削除</button>
                 </li>
