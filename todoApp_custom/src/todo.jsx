@@ -2,25 +2,43 @@ import { useState, useRef } from 'react'
 import './App.css'
 
 export const Todo = () => {
-  const [Tabs, setTabs] = useState({
-    "買い物": ["食パン","洗剤","目薬","ハンドクリーム","乾電池","ティッシュ"],
-    "課題": ["作文","数学プリント","物理問題集"],
-    "タブ1": ["タスク名1","タスク名2","タスク名3","タスク名4"],
-    "タブ2": ["タスク名4","タスク名5","タスク名7","タスク名8"]
+  const [tabs, setTabs] = useState({
+    "買い物": [
+      { name: "食パン", completed: false },
+      { name: "洗剤", completed: false },
+      { name: "目薬", completed: false },
+      { name: "ハンドクリーム", completed: false },
+      { name: "乾電池", completed: false },
+      { name: "ティッシュ", completed: false }
+    ],
+    "課題": [
+      { name: "作文", completed: false },
+      { name: "数学プリント", completed: false },
+      { name: "物理問題集", completed: false }
+    ],
+    "タブ1": [
+      { name: "タスク名1", completed: false },
+      { name: "タスク名2", completed: false },
+      { name: "タスク名3", completed: false },
+      { name: "タスク名4", completed: false }
+    ],
+    "タブ2": [
+      { name: "タスク名4", completed: false },
+      { name: "タスク名5", completed: false },
+      { name: "タスク名7", completed: false },
+      { name: "タスク名8", completed: false }
+    ]
   });
   
-  const [selectedTab, setSelectedTab] = useState(Object.keys(Tabs)[0]);
+  const [selectedTab, setSelectedTab] = useState(Object.keys(tabs)[0]);
   const [newTabName, setNewTabName] = useState("");
   const [newTodoName, setNewTodoName] = useState("");
   const [isAddingTab, setIsAddingTab] = useState(false);
-  const [isAddingTabComposing, setIsAddingTabComposing] = useState(false);
-  const [isAddingTodoComposing, setIsAddingTodoComposing] = useState(false);
-
   
-  const isExistTabs = (Object.keys(Tabs).length !== 0);
+  const isExistTabs = (Object.keys(tabs).length !== 0);
   const isExistTodosInSelectedTab = (
     selectedTab !== "" &&
-    Tabs[selectedTab].length !== 0
+    tabs[selectedTab].length !== 0
   );
 
   const inputTabElem = useRef(null);
@@ -36,11 +54,11 @@ export const Todo = () => {
       return;
     }
 
-    if(newTabName in Tabs) {
+    if(newTabName in tabs) {
       window.alert("同名のタブは追加できません");
       return;
     };
-    const newTabs = Tabs;
+    const newTabs = tabs;
     newTabs[newTabName] = [];
     
     setTabs(newTabs);
@@ -54,15 +72,17 @@ export const Todo = () => {
       return;
     };
 
-    if(Tabs[selectedTab].includes(newTodoName)) {
-      window.alert("同名のTODOは追加できません");
-      return;
-    };
+    for (const todo of tabs[selectedTab]) {
+      if (newTodoName === todo.name) {
+        window.alert("同名のTODOは追加できません");
+        return;
+      }
+    }
 
-    const newTodos = Tabs[selectedTab];
-    newTodos.push(newTodoName);
+    const newTodos = tabs[selectedTab];
+    newTodos.push({name: newTodoName, completed: false});
     
-    const newTabs = Tabs;
+    const newTabs = tabs;
     newTabs[selectedTab] = newTodos;
 
     setTabs(newTabs);
@@ -71,7 +91,7 @@ export const Todo = () => {
   }
 
   const onClickDeleteTab = (tabName) => {
-    const newTabs = { ...Tabs };
+    const newTabs = { ...tabs };
     delete newTabs[tabName];
     setTabs(newTabs);
     if(tabName === selectedTab) {
@@ -87,13 +107,13 @@ export const Todo = () => {
   }
 
   const tabInputKeyDown = (event) => {
-    if(event.key === "Enter" && !isAddingTabComposing){
+    if(event.key === "Enter"){
       onClickSaveTab();
     }
   }
 
   const todoInputKeyDown = (event) => {
-    if(event.key === "Enter" && !isAddingTodoComposing){
+    if(event.key === "Enter"){
       onClickSaveTodo();
     }
   }
@@ -104,7 +124,7 @@ export const Todo = () => {
       <div>
         <ul style={{ display: 'flex'}}>
           {isExistTabs && (
-            Object.keys(Tabs).map((tab, index) => {
+            Object.keys(tabs).map((tab, index) => {
               return (
                 <li key={index} style={{margin: "0 20px"}}>
                   <p>{tab}</p>
@@ -122,8 +142,6 @@ export const Todo = () => {
                 value={newTabName}
                 onChange={(e) => setNewTabName(e.target.value)}
                 onKeyDown={tabInputKeyDown}
-                onCompositionStart={() => setIsAddingTabComposing(true)}
-                onCompositionEnd={() => setIsAddingTabComposing(false)}
                 placeholder='タブ名を入力'
               />
               <button onClick={onClickSaveTab}>保存</button>
@@ -138,12 +156,12 @@ export const Todo = () => {
       </div>
       <ul style={{listStyleType: "none"}}>
         {isExistTabs && isExistTodosInSelectedTab && (
-          Tabs[selectedTab].map((todo, index) => {
+          tabs[selectedTab].map((todo, index) => {
             return (
               <div style={{display: "flex"}} key={index}>
                 <input type="checkbox" />
                 <li>
-                  <p>{todo}</p>
+                  <p>{todo.name}</p>
                 </li>
               </div>
             )
@@ -154,8 +172,6 @@ export const Todo = () => {
                     value={newTodoName}
                     onChange={(e) => setNewTodoName(e.target.value)}
                     onKeyDown={todoInputKeyDown}
-                    onCompositionStart={() => setIsAddingTodoComposing(true)}
-                    onCompositionEnd={() => setIsAddingTodoComposing(false)}
                     placeholder='TODOを入力' />
             <button onClick={onClickSaveTodo}>Todoを追加</button>
           </div>
