@@ -118,6 +118,13 @@ export const Todo = () => {
     }
   }
 
+  const onToggleTodo = (index) => {
+    const newTabs = { ...tabs }; 
+    newTabs[selectedTab] = [...newTabs[selectedTab]];
+    newTabs[selectedTab][index] = { ...newTabs[selectedTab][index], completed: !newTabs[selectedTab][index].completed };
+    setTabs(newTabs);
+  }
+
   return (
     <>
       <p>TODOリスト</p>
@@ -159,7 +166,10 @@ export const Todo = () => {
           tabs[selectedTab].map((todo, index) => {
             return (
               <div style={{display: "flex"}} key={index}>
-                <input type="checkbox" />
+                <input 
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => {onToggleTodo(index)}}/>
                 <li>
                   <p>{todo.name}</p>
                 </li>
