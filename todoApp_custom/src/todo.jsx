@@ -39,10 +39,10 @@ export const Todo = () => {
   const [isAddingTab, setIsAddingTab] = useState(false);
   
   const isExistTabs = (Object.keys(tabs).length !== 0);
-  const isExistTodosInSelectedTab = (
-    selectedTab !== "" &&
-    tabs[selectedTab].length !== 0
-  );
+  // const isExistTodosInSelectedTab = (
+  //   selectedTab !== "" &&
+  //   tabs[selectedTab].length !== 0
+  // );
 
   const inputTabElem = useRef(null);
 
@@ -139,18 +139,20 @@ export const Todo = () => {
       <h1 className="
         text-5xl
         text-white
-        bg-purple-300
-        w-screen 
+        bg-sky-300
+        w-full
         flex 
         justify-center 
         items-center
         h-28
       "
       >TODOリスト</h1>
-      <div>
+      <div className='overflow-x-auto'>
         <ul className='flex'>
           {isExistTabs && (
             Object.keys(tabs).map((tab, index) => {
+              const selectButtonClass = `h-8 w-28 text-lg ${tab === selectedTab ? 'border-b-2 border-blue-400 bg-gray-300' : 'bg-gray-200'} text-gray-700`;
+              const deleteButtonClass = `h-8 w-10 ${tab === selectedTab ? 'border-b-2 border-blue-400 bg-gray-300' : 'bg-gray-200'}  justify-center inline-flex item-center mt-0 text-2xl`;
               return (
                 <li key={index} className="
                   flex
@@ -158,24 +160,8 @@ export const Todo = () => {
                   w-28
                   text-lg
                 ">
-                  <button onClick={() => onClickSelectTab(tab)} className="
-                    h-9
-                    w-28
-                    text-lg
-                    bg-gray-200
-                    text-gray-700
-                  ">{tab}</button>
-                  <button onClick={() => onClickDeleteTab(tab)} className="
-                    h-9
-                    w-10
-                  bg-gray-200
-                    justify-center
-                    inline-flex
-                    item-center
-                    mt-0×
-                    text-2xl
-                  "
-                    >×</button>
+                  <button onClick={() => onClickSelectTab(tab)} className={selectButtonClass}>{tab}</button>
+                  <button onClick={() => onClickDeleteTab(tab)} className={deleteButtonClass}>×</button>
                 </li>
               );
           }))}
@@ -188,20 +174,20 @@ export const Todo = () => {
                 value={newTabName}
                 onChange={(e) => setNewTabName(e.target.value)}
                 onKeyDown={tabInputKeyDown}
-                placeholder='タブ名を入力'
+                placeholder=' タブ名を入力'
                 className='
-                  h-9
+                  h-8
                   w-30
                   border
                   bg-gray-100'
               />
-              <button onClick={onClickSaveTab} className='
+              {/* <button onClick={onClickSaveTab} className='
                 ml-1
                 p-1
                 rounded-lg
                 border
                 bg-gray-200
-              '>保存</button>
+              '>保存</button> */}
             </div>
           )}
 
@@ -214,23 +200,23 @@ export const Todo = () => {
           
         </ul>
       </div>
-
-      <div className='
-        w-80
-        mt-10
-        min-h-[400px]
-        mx-auto
-        py-5
-        px-1
-        flex
-        justify-center
-        bg-gray-200
-        rounded-3xl
-        relative
-      '>
-        <ul>
-          {isExistTabs && isExistTodosInSelectedTab && (
-            tabs[selectedTab].map((todo, index) => {
+      
+      {isExistTabs &&  
+        <div className='
+          w-80
+          mt-10
+          min-h-[400px]
+          mx-auto
+          py-5
+          px-1
+          flex
+          justify-center
+          bg-gray-200
+          rounded-3xl
+          relative
+        '>
+          <ul>
+            {tabs[selectedTab].map((todo, index) => {
               return (
                 <div key={index} className='
                   w-[260px]
@@ -252,19 +238,18 @@ export const Todo = () => {
                   </li>
                 </div>
               )
-          }))}
-          {isExistTabs && (
+          })}
             <div>
               <input type="text"
-                      value={newTodoName}
-                      onChange={(e) => setNewTodoName(e.target.value)}
-                      onKeyDown={todoInputKeyDown}
-                      placeholder='TODOを入力' 
-                      className='
-                        mt-2
-                        rounded-md
+                value={newTodoName}
+                onChange={(e) => setNewTodoName(e.target.value)}
+                onKeyDown={todoInputKeyDown}
+                placeholder=' TODOを入力' 
+                className='
+                  mt-2
+                  rounded-md
 
-                      '/>
+                '/>
               <button onClick={onClickSaveTodo} className='
                 pl-1
                 text-xl
@@ -277,9 +262,10 @@ export const Todo = () => {
                 mr-2
               ' ><FaTrash size={25}/></button>
             </div>
-          )}
-        </ul>
-      </div>
+          </ul>
+        </div>
+      }
+
       {!isExistTabs && 
         <p>タスクを登録するには，タブを追加してください</p>
       }
