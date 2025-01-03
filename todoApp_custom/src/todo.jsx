@@ -94,6 +94,15 @@ export const Todo = () => {
   }
 
   const onClickDeleteTab = (tabName) => {
+    const ifTabHasUncompletedTodo = tabs[tabName].some((tab) => {
+      return tab.completed === false;
+    })
+    
+    if(ifTabHasUncompletedTodo){
+      if(!window.confirm('未終了のTODOが含まれています．タブを削除しますか?')){
+        return;
+      }
+    }
     const newTabs = { ...tabs };
     delete newTabs[tabName];
     setTabs(newTabs);
