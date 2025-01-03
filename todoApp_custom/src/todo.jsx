@@ -229,13 +229,16 @@ export const Todo = () => {
                   pl-2
 
                 '>
-                  <input 
-                    type="checkbox"
-                    checked={todo.completed}
-                    onChange={() => {onToggleTodo(index)}}/>
-                  <li>
-                    <p>{todo.name}</p>
-                  </li>
+                  <label htmlFor={`todo-${index}`} className="flex items-center">
+                    <input 
+                      type="checkbox"
+                      id={`todo-${index}`}
+                      checked={todo.completed}
+                      onChange={() => {onToggleTodo(index)}}
+                      className="form-checkbox h-5 w-5 text-blue-600 rounded-full"
+                    />
+                    <span className="ml-2">{todo.name}</span>
+                  </label>
                 </div>
               )
           })}
@@ -248,7 +251,10 @@ export const Todo = () => {
                 className='
                   mt-2
                   rounded-md
-
+                  focus:outline-none 
+                  focus:ring-2
+                  focus:ring-cyan-300 
+                  focus:ring-opacity-75
                 '/>
               <button onClick={onClickSaveTodo} className='
                 pl-1
