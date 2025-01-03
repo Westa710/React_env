@@ -172,7 +172,6 @@ export const Todo = () => {
                     item-center
                     mt-0×
                     text-2xl
-                    
                   "
                     >×</button>
                 </li>
@@ -188,8 +187,19 @@ export const Todo = () => {
                 onChange={(e) => setNewTabName(e.target.value)}
                 onKeyDown={tabInputKeyDown}
                 placeholder='タブ名を入力'
+                className='
+                  h-9
+                  w-30
+                  border
+                  bg-gray-100'
               />
-              <button onClick={onClickSaveTab}>保存</button>
+              <button onClick={onClickSaveTab} className='
+                ml-1
+                p-1
+                rounded-lg
+                border
+                bg-gray-200
+              '>保存</button>
             </div>
           )}
 
