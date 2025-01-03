@@ -134,16 +134,47 @@ export const Todo = () => {
 
   return (
     <>
-      <p>TODOリスト</p>
+      <h1 className="
+        text-5xl
+        text-white
+        bg-purple-300
+        w-screen 
+        flex 
+        justify-center 
+        items-center
+        h-28
+      "
+      >TODOリスト</h1>
       <div>
-        <ul style={{ display: 'flex'}}>
+        <ul className='flex'>
           {isExistTabs && (
             Object.keys(tabs).map((tab, index) => {
               return (
-                <li key={index} style={{margin: "0 20px"}}>
-                  <p style={(tab == selectedTab) ? {"color": "red"}: {"color": "black"}}>{tab}</p>
-                  <button onClick={() => onClickSelectTab(tab)}>{tab}</button>
-                  <button onClick={() => onClickDeleteTab(tab)}>削除</button>
+                <li key={index} className="
+                  flex
+                  h-8
+                  w-28
+                  text-lg
+                ">
+                  <button onClick={() => onClickSelectTab(tab)} className="
+                    h-9
+                    w-28
+                    text-lg
+                    bg-gray-200
+                    text-gray-700
+                  ">{tab}</button>
+                  <button onClick={() => onClickDeleteTab(tab)} className="
+                    h-9
+                    w-10
+                  bg-gray-200
+                    justify-center
+                    inline-flex
+                    item-center
+                    mt-0×
+                    text-2xl
+                    
+                  "
+                    >×</button>
                 </li>
               );
           }))}
@@ -163,7 +194,10 @@ export const Todo = () => {
           )}
 
           {!isAddingTab &&
-            <button onClick={onClickAddingTab}>タブを追加</button>
+            <button onClick={onClickAddingTab} className='
+              text-2xl
+              ml-2
+            '>+</button>
           }
           
         </ul>
