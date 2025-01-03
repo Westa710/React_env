@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react'
 import './App.css'
 import './index.css'
+// import { IconContent } from 'react-icons'
+import { FaTrash } from "react-icons/fa"
 
 export const Todo = () => {
   const [tabs, setTabs] = useState({
@@ -212,34 +214,72 @@ export const Todo = () => {
           
         </ul>
       </div>
-      <ul style={{listStyleType: "none"}}>
-        {isExistTabs && isExistTodosInSelectedTab && (
-          tabs[selectedTab].map((todo, index) => {
-            return (
-              <div style={{display: "flex"}} key={index}>
-                <input 
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => {onToggleTodo(index)}}/>
-                <li>
-                  <p>{todo.name}</p>
-                </li>
-              </div>
-            )
-        }))}
-        {isExistTabs && (
-          <div>
-            <input type="text"
-                    value={newTodoName}
-                    onChange={(e) => setNewTodoName(e.target.value)}
-                    onKeyDown={todoInputKeyDown}
-                    placeholder='TODOを入力' />
-            <button onClick={onClickSaveTodo}>Todoを追加</button>
-            <button onClick={onClickDeleteTodo}>完了済みのTODOを削除</button>
-          </div>
-        )}
 
-      </ul>
+      <div className='
+        w-80
+        mt-10
+        min-h-[400px]
+        mx-auto
+        py-5
+        px-1
+        flex
+        justify-center
+        bg-gray-200
+        rounded-3xl
+        relative
+      '>
+        <ul>
+          {isExistTabs && isExistTodosInSelectedTab && (
+            tabs[selectedTab].map((todo, index) => {
+              return (
+                <div key={index} className='
+                  w-[260px]
+                  mx-0
+                  flex
+                  border-b-2
+                  items-center
+                  border-gray-600
+                  h-10
+                  pl-2
+
+                '>
+                  <input 
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => {onToggleTodo(index)}}/>
+                  <li>
+                    <p>{todo.name}</p>
+                  </li>
+                </div>
+              )
+          }))}
+          {isExistTabs && (
+            <div>
+              <input type="text"
+                      value={newTodoName}
+                      onChange={(e) => setNewTodoName(e.target.value)}
+                      onKeyDown={todoInputKeyDown}
+                      placeholder='TODOを入力' 
+                      className='
+                        mt-2
+                        rounded-md
+
+                      '/>
+              <button onClick={onClickSaveTodo} className='
+                pl-1
+                text-xl
+              '>+</button>
+              <button onClick={onClickDeleteTodo} className='
+                absolute
+                bottom-4
+                right-2
+                mt-2
+                mr-2
+              ' ><FaTrash size={25}/></button>
+            </div>
+          )}
+        </ul>
+      </div>
       {!isExistTabs && 
         <p>タスクを登録するには，タブを追加してください</p>
       }
