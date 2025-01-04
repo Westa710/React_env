@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import './App.css'
 import './index.css'
-// import { IconContent } from 'react-icons'
 import { FaTrash } from "react-icons/fa"
 
 export const Todo = () => {
@@ -39,10 +38,6 @@ export const Todo = () => {
   const [isAddingTab, setIsAddingTab] = useState(false);
   
   const isExistTabs = (Object.keys(tabs).length !== 0);
-  // const isExistTodosInSelectedTab = (
-  //   selectedTab !== "" &&
-  //   tabs[selectedTab].length !== 0
-  // );
 
   const inputTabElem = useRef(null);
 
@@ -145,7 +140,7 @@ export const Todo = () => {
 
   return (
     <>
-      <h1 className="
+      {/* <h1 className="
         text-5xl
         text-white
         bg-sky-300
@@ -155,7 +150,7 @@ export const Todo = () => {
         items-center
         h-28
       "
-      >TODOリスト</h1>
+      >TODOリスト</h1> */}
       <div className='overflow-x-auto'>
         <ul className='flex'>
           {isExistTabs && (
@@ -190,6 +185,7 @@ export const Todo = () => {
                   border
                   bg-gray-100'
               />
+              {/* タブ追加ボタンの保存ボタン，スマホで箱のボタンがないとタブ追加できなくなる */}
               {/* <button onClick={onClickSaveTab} className='
                 ml-1
                 p-1
@@ -236,7 +232,6 @@ export const Todo = () => {
                   border-gray-600
                   h-10
                   pl-2
-
                 '>
                   <label htmlFor={`todo-${index}`} className="flex items-center">
                     <input 
