@@ -42,7 +42,6 @@ export const Todo = () => {
   const inputTabElem = useRef(null);
 
   const onClickSelectTab = (tab) => {
-    console.log(tab);
     setSelectedTab(tab);
   };
 
