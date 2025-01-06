@@ -1,6 +1,6 @@
 {
-  "name": "todoapp-custom",
-  "homepage": "./",
+  "name": "todoApp",
+  "homepage": "https://Westa710.github.io/todoApp",
   "private": true,
   "version": "0.0.0",
   "type": "module",
