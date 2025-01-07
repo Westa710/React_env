@@ -166,16 +166,17 @@ export const App = () => {
             tabInputKeyDown={tabInputKeyDown} />
 
       
-      
-      <Todos  tabs={tabs} 
-              selectedTab={selectedTab}
-              newTodoName={newTodoName}
-              onToggleTodo={onToggleTodo}
-              setNewTodoName={setNewTodoName}
-              todoInputKeyDown={todoInputKeyDown}
-              onClickSaveTodo={onClickSaveTodo}
-              onClickDeleteTodo={onClickDeleteTodo}
-              />
+      {isExistTabs && 
+        <Todos  tabs={tabs} 
+                selectedTab={selectedTab}
+                newTodoName={newTodoName}
+                onToggleTodo={onToggleTodo}
+                setNewTodoName={setNewTodoName}
+                todoInputKeyDown={todoInputKeyDown}
+                onClickSaveTodo={onClickSaveTodo}
+                onClickDeleteTodo={onClickDeleteTodo}
+                />
+      }
 
       {!isExistTabs && 
         <p>タスクを登録するには，タブを追加してください</p>
