@@ -42,6 +42,10 @@ export const Tabs = (props) => {
           </div>
         )}
 
+        {/* FIXME:  新規タブを作成する際に長い文字列を入力するとタブ名が数行になり，
+                    枠をはみ出してしまう 
+        */}
+
         {!isAddingTab &&
           <button onClick={onClickAddingTab} className='
             text-2xl
