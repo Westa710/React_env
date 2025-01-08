@@ -39,14 +39,6 @@ export const Tabs = (props) => {
                 border
                 bg-gray-100'
             />
-            {/* タブ追加ボタンの保存ボタン，スマホではこのボタンがないとタブ追加できなくなる */}
-            {/* <button onClick={onClickSaveTab} className='
-              ml-1
-              p-1
-              rounded-lg
-              border
-              bg-gray-200
-            '>保存</button> */}
           </div>
         )}
 
