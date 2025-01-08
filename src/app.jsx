@@ -153,8 +153,7 @@ export const App = () => {
         h-28
       "
       >TODOリスト</h1> */}
-      <Tabs isExistTabs={isExistTabs}
-            tabs={tabs}
+      <Tabs tabs={tabs}
             selectedTab={selectedTab} 
             isAddingTab={isAddingTab} 
             inputTabElem={inputTabElem} 
@@ -165,7 +164,6 @@ export const App = () => {
             onClickAddingTab={onClickAddingTab} 
             tabInputKeyDown={tabInputKeyDown} />
 
-      
       {isExistTabs && 
         <Todos  tabs={tabs} 
                 selectedTab={selectedTab}
