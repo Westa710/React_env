@@ -1,7 +1,9 @@
 import { TodoItem } from "./todoItem"
 import { FaTrash } from "react-icons/fa"
 
-export const Todos = (props) => {
+import { memo } from 'react'
+
+const TodosComponent = (props) => {
   const { tabs, 
           selectedTab,
           newTodoName,
@@ -63,3 +65,5 @@ export const Todos = (props) => {
       </div>
   )
 }
+
+export const Todos = memo(TodosComponent);

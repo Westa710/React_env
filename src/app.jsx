@@ -163,6 +163,8 @@ export const App = () => {
             setNewTabName={setNewTabName} 
             onClickAddingTab={onClickAddingTab} 
             tabInputKeyDown={tabInputKeyDown} />
+      {/* FIXME: タブは各TODOの完了状況を知る必要はないので，Tabsを渡さないようにしたほうが良いかもしれない
+                 その部分を改善するとTODOのチェックボックスを押したときにタブが再レンダリングすることを防げる */}
 
       {isExistTabs && 
         <Todos  tabs={tabs} 
