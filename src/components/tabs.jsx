@@ -3,7 +3,7 @@ import { memo } from 'react'
 
 const TabsComponent = (props) => {
   const {
-    tabs, 
+    tabsName,
     selectedTab, 
     isAddingTab, 
     inputTabElem,
@@ -14,12 +14,13 @@ const TabsComponent = (props) => {
     onClickAddingTab,
     tabInputKeyDown
   } = props;
-  
-  return ( 
+
+  // console.log(tabsName);
+  return (
     <div className='overflow-x-auto'>
       <ul className='flex'>
 
-        <TabItem  tabs={tabs}
+        <TabItem  tabsName={tabsName}
                   selectedTab={selectedTab}
                   onClickSelectTab={onClickSelectTab}
                   onClickDeleteTab={onClickDeleteTab}

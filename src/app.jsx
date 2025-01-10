@@ -1,10 +1,8 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Tabs } from './components/tabs'
 import { Todos } from './components/todos'
 import './App.css'
 import './index.css'
-
-
 
 export const App = () => {
   const [tabs, setTabs] = useState({
@@ -34,7 +32,13 @@ export const App = () => {
       { name: "タスク名8", completed: false }
     ]
   });
-  
+
+  const [tabsName, setTabsName] = useState(Object.keys(tabs));
+
+  useEffect(() => {
+    setTabsName(Object.keys(tabs));
+  }, [tabs]);
+
   const [selectedTab, setSelectedTab] = useState(Object.keys(tabs)[0]);
   const [newTabName, setNewTabName] = useState("");
   const [newTodoName, setNewTodoName] = useState("");
@@ -58,7 +62,8 @@ export const App = () => {
       window.alert("同名のタブは追加できません");
       return;
     };
-    const newTabs = tabs;
+
+    const newTabs = { ...tabs };
     newTabs[newTabName] = [];
     
     setTabs(newTabs);
@@ -82,7 +87,7 @@ export const App = () => {
     const newTodos = tabs[selectedTab];
     newTodos.push({name: newTodoName, completed: false});
     
-    const newTabs = tabs;
+    const newTabs = { ...tabs };
     newTabs[selectedTab] = newTodos;
 
     setTabs(newTabs);
@@ -153,7 +158,7 @@ export const App = () => {
         h-28
       "
       >TODOリスト</h1> */}
-      <Tabs tabs={tabs}
+      <Tabs tabsName={tabsName}
             selectedTab={selectedTab} 
             isAddingTab={isAddingTab} 
             inputTabElem={inputTabElem} 
@@ -163,8 +168,6 @@ export const App = () => {
             setNewTabName={setNewTabName} 
             onClickAddingTab={onClickAddingTab} 
             tabInputKeyDown={tabInputKeyDown} />
-      {/* FIXME: タブは各TODOの完了状況を知る必要はないので，Tabsを渡さないようにしたほうが良いかもしれない
-                 その部分を改善するとTODOのチェックボックスを押したときにタブが再レンダリングすることを防げる */}
 
       {isExistTabs && 
         <Todos  tabs={tabs} 
