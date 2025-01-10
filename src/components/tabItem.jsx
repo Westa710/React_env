@@ -6,7 +6,6 @@ export const TabItem = (props) => {
     onClickDeleteTab
   } = props
 
-  // console.log(tabsName);
 
   return (
     <>

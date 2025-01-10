@@ -15,7 +15,6 @@ const TabsComponent = (props) => {
     tabInputKeyDown
   } = props;
 
-  // console.log(tabsName);
   return (
     <div className='overflow-x-auto'>
       <ul className='flex'>
