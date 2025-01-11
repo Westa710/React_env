@@ -163,6 +163,8 @@ export const App = () => {
             isAddingTab={isAddingTab} 
             inputTabElem={inputTabElem} 
             newTabName={newTabName} 
+            // TODO：以下の5つの関数をuseCallbackでメモ化して，
+            // チェック・アンチェック時にタブが再レンダリングされないように修正
             onClickSelectTab={onClickSelectTab} 
             onClickDeleteTab={onClickDeleteTab} 
             setNewTabName={setNewTabName} 

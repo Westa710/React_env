@@ -19,6 +19,10 @@ const TabsComponent = (props) => {
     <div className='overflow-x-auto'>
       <ul className='flex'>
 
+        {/*
+        TODO: 新しいタブの名前を入力すると画面全体が再レンダリングされる問題を修正
+         */}
+
         <TabItem  tabsName={tabsName}
                   selectedTab={selectedTab}
                   onClickSelectTab={onClickSelectTab}
