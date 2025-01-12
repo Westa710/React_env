@@ -1,10 +1,10 @@
 import { TodoItem } from "./todoItem"
+import { NewTodoInput } from "./newTodoInput"
 import { FaTrash } from "react-icons/fa"
-import { memo, useState, useCallback } from 'react'
+import { memo, useCallback } from 'react'
 
 const TodosComponent = (props) => {
   const { tabs, setTabs, selectedTab } = props;
-  const [newTodoName, setNewTodoName] = useState("");
 
   const onToggleTodo = useCallback((index) => {
     const newTabs = { ...tabs }; 
@@ -13,39 +13,13 @@ const TodosComponent = (props) => {
     setTabs(newTabs);
   }, [tabs, selectedTab, setTabs]);
 
-  const onClickSaveTodo = useCallback(() => {
-    if(newTodoName === "") {
-      return;
-    };
-
-    for (const todo of tabs[selectedTab]) {
-      if (newTodoName === todo.name) {
-        window.alert("同名のTODOは追加できません");
-        return;
-      }
-    }
-
-    const newTodos = tabs[selectedTab];
-    newTodos.push({name: newTodoName, completed: false});
-    
-    const newTabs = { ...tabs };
-    newTabs[selectedTab] = newTodos;
-
-    setTabs(newTabs);
-    setNewTodoName("");
-  }, [newTodoName, tabs, selectedTab, setTabs]);
+  
 
   const onClickDeleteTodo = useCallback(() => {
     const newTabs = { ...tabs }; 
     newTabs[selectedTab] = [ ...newTabs[selectedTab].filter(todo => todo.completed === false) ];
     setTabs(newTabs);
   }, [tabs, selectedTab, setTabs]);
-
-  const todoInputKeyDown = useCallback((event) => {
-    if(event.key === "Enter"){
-      onClickSaveTodo();
-    }
-  }, [onClickSaveTodo]);
 
   return(
     <div className='
@@ -67,30 +41,17 @@ const TodosComponent = (props) => {
                   onToggleTodo={onToggleTodo}
         />
         <div>
-          <input type="text"
-            value={newTodoName}
-            onChange={(e) => setNewTodoName(e.target.value)}
-            onKeyDown={todoInputKeyDown}
-            placeholder=' TODOを入力' 
-            className='
-              mt-2
-              rounded-md
-              focus:outline-none 
-              focus:ring-2
-              focus:ring-cyan-300 
-              focus:ring-opacity-75
-            '/>
-          <button onClick={onClickSaveTodo} className='
-            pl-1
-            text-xl
-          '>+</button>
+          <NewTodoInput tabs={tabs}
+                        selectedTab={selectedTab}
+                        setTabs={setTabs}/>
           <button onClick={onClickDeleteTodo} className='
             absolute
             bottom-4
             right-2
             mt-2
             mr-2
-          ' ><FaTrash size={25}/></button>
+          ' >
+          <FaTrash size={25}/></button>
         </div>
       </ul>
     </div>
