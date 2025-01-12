@@ -1,4 +1,6 @@
-export const TabItem = (props) => {
+import { memo } from 'react';
+
+const tabItemComponent = (props) => {
   const {
     tabsName,
     selectedTab,
@@ -27,3 +29,5 @@ export const TabItem = (props) => {
     </>
   )
 }
+
+export const TabItem = memo(tabItemComponent);

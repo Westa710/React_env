@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import { Tabs } from './components/tabs'
 import { Todos } from './components/todos'
 import './App.css'
@@ -33,162 +33,22 @@ export const App = () => {
     ]
   });
 
-  const [tabsName, setTabsName] = useState(Object.keys(tabs));
-
-  useEffect(() => {
-    setTabsName(Object.keys(tabs));
-  }, [tabs]);
-
   const [selectedTab, setSelectedTab] = useState(Object.keys(tabs)[0]);
-  const [newTabName, setNewTabName] = useState("");
-  const [newTodoName, setNewTodoName] = useState("");
-  const [isAddingTab, setIsAddingTab] = useState(false);
-  
-  const isExistTabs = (Object.keys(tabs).length !== 0);
-
-  const inputTabElem = useRef(null);
-
-  const onClickSelectTab = (tab) => {
-    setSelectedTab(tab);
-  };
-
-  const onClickSaveTab = () => {
-    if(newTabName === "") {
-      setIsAddingTab(false);
-      return;
-    }
-
-    if(newTabName in tabs) {
-      window.alert("同名のタブは追加できません");
-      return;
-    };
-
-    const newTabs = { ...tabs };
-    newTabs[newTabName] = [];
-    
-    setTabs(newTabs);
-    setNewTabName("");
-    setSelectedTab(newTabName);
-    setIsAddingTab(false);
-  }
-
-  const onClickSaveTodo = () => {
-    if(newTodoName === "") {
-      return;
-    };
-
-    for (const todo of tabs[selectedTab]) {
-      if (newTodoName === todo.name) {
-        window.alert("同名のTODOは追加できません");
-        return;
-      }
-    }
-
-    const newTodos = tabs[selectedTab];
-    newTodos.push({name: newTodoName, completed: false});
-    
-    const newTabs = { ...tabs };
-    newTabs[selectedTab] = newTodos;
-
-    setTabs(newTabs);
-    setNewTodoName("");
-
-  }
-
-  const onClickDeleteTab = (tabName) => {
-    const ifTabHasUncompletedTodo = tabs[tabName].some((tab) => {
-      return tab.completed === false;
-    })
-    
-    if(ifTabHasUncompletedTodo){
-      if(!window.confirm('未終了のTODOが含まれています．タブを削除しますか?')){
-        return;
-      }
-    }
-    const newTabs = { ...tabs };
-    delete newTabs[tabName];
-    setTabs(newTabs);
-    if(tabName === selectedTab) {
-      setSelectedTab(Object.keys(newTabs)[0] || "");
-    }
-  }
-
-  const onClickAddingTab = () => {
-    setIsAddingTab(true);
-    setTimeout(() => {
-      inputTabElem.current.focus();
-    }, 0);
-  }
-
-  const tabInputKeyDown = (event) => {
-    if(event.key === "Enter"){
-      onClickSaveTab();
-    }
-  }
-
-  const todoInputKeyDown = (event) => {
-    if(event.key === "Enter"){
-      onClickSaveTodo();
-    }
-  }
-
-  const onToggleTodo = (index) => {
-    const newTabs = { ...tabs }; 
-    newTabs[selectedTab] = [...newTabs[selectedTab]];
-    newTabs[selectedTab][index] = { ...newTabs[selectedTab][index], completed: !newTabs[selectedTab][index].completed };
-    setTabs(newTabs);
-  }
-
-  const onClickDeleteTodo = () => {
-    const newTabs = { ...tabs }; 
-    newTabs[selectedTab] = [ ...newTabs[selectedTab].filter(todo => todo.completed === false) ];
-    setTabs(newTabs);
-  }
 
   return (
     <>
-      {/* <h1 className="
-        text-5xl
-        text-white
-        bg-sky-300
-        w-full
-        flex 
-        justify-center 
-        items-center
-        h-28
-      "
-      >TODOリスト</h1> */}
-      <Tabs tabsName={tabsName}
+      <Tabs tabs={tabs}
+            setTabs={setTabs}
             selectedTab={selectedTab} 
-            isAddingTab={isAddingTab} 
-            inputTabElem={inputTabElem} 
-            newTabName={newTabName} 
-            // TODO：以下の5つの関数をuseCallbackでメモ化して，
-            // チェック・アンチェック時にタブが再レンダリングされないように修正
-            onClickSelectTab={onClickSelectTab} 
-            onClickDeleteTab={onClickDeleteTab} 
-            setNewTabName={setNewTabName} 
-            onClickAddingTab={onClickAddingTab} 
-            tabInputKeyDown={tabInputKeyDown} />
-
-      {isExistTabs && 
+            setSelectedTab={setSelectedTab} />
+      {Object.keys(tabs).length > 0 && 
         <Todos  tabs={tabs} 
-                selectedTab={selectedTab}
-                newTodoName={newTodoName}
-                onToggleTodo={onToggleTodo}
-                setNewTodoName={setNewTodoName}
-                todoInputKeyDown={todoInputKeyDown}
-                onClickSaveTodo={onClickSaveTodo}
-                onClickDeleteTodo={onClickDeleteTodo}
-                />
+                setTabs={setTabs}
+                selectedTab={selectedTab} />
       }
-
-      {!isExistTabs && 
+      {Object.keys(tabs).length === 0 && 
         <p>タスクを登録するには，タブを追加してください</p>
       }
-
-
-
     </>
   )
 }
